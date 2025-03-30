@@ -1,18 +1,28 @@
-def longestCommonPrefix(strs: list[str]) -> str:
-    smallest_word = sorted(strs, key=len)[0]
-    idx = len(smallest_word)
-    while idx > 0:
-        if all(val.startswith(smallest_word[:idx]) for val in strs):
-            break
-        else:
-            idx -= 1
-    
-    return smallest_word[:idx]
+# Leetcode 1614. Maximum Nesting Depth of the Parentheses
+
+def maxDepth(s: str) -> int:
+    """
+    Given a valid parentheses string s, return the nesting depth of s. 
+    The nesting depth is the maximum number of nested parentheses.
+    """
+    depth = 0
+    max_depth = 0
+
+    for val in s:
+        if val == "(":
+            depth += 1
+            if max_depth < depth:
+                max_depth = depth
+        elif val == ")":
+            depth -= 1
+
+    return max_depth
 
 
 def main() -> None:
-    print(longestCommonPrefix(strs = ["flower","flow","flight"]))
-    print(longestCommonPrefix(strs = ["dog","racecar","car"]))
+    print(maxDepth(s = "(1+(2*3)+((8)/4))+1"))  # 3
+    print(maxDepth(s = "(1)+((2))+(((3)))"))    # 3
+    print(maxDepth(s = "()(())((()()))"))       # 3
 
 
 if __name__ == '__main__':
